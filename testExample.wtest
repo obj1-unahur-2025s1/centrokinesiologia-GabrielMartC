@@ -134,3 +134,41 @@ describe "group of test PARTE 4" {
     assert.equals(2, kinesioHur.cantPacientQueNoPuedenHacerRutina())
   }
 }
+
+describe "group of test PARTE 5" {
+  const bici = new AparatoBicicleta()
+  const biciRoja = new AparatoBicicleta(color = "rojo")
+  const magneto = new AparatoMagneto()
+  const magnetoVer = new AparatoMagneto(color = "verde")
+  const minitramp = new AparatoMinitramp()
+
+  const magnetoNegro = new AparatoMagneto(puntosImantacion = 80)
+
+  const nicolas = new PacienteResistente(edad=40, nivelFortalezaMusc=20, nivelDolorMusc=10, rutina=[bici, minitramp, bici, magneto])
+  const victoria = new PacienteCaprichoso(edad=30, nivelFortalezaMusc=40, nivelDolorMusc=10, rutina=[bici, minitramp, bici, magneto])
+  const julian = new PacienteCaprichoso(edad=20, nivelFortalezaMusc=50, nivelDolorMusc=54, rutina=[biciRoja, magnetoVer, bici])
+  const zoe = new PacienteRapidaRecup(edad=50, nivelFortalezaMusc=40, nivelDolorMusc=14, rutina=[bici, minitramp, bici, magneto])
+  const milena = new PacienteResistente(edad=3, nivelFortalezaMusc=50, nivelDolorMusc=30, rutina=[magneto, bici])
+
+  var kinesioHur = new CentroKinesiologia(pacientes=[nicolas, victoria, julian, zoe, milena], aparatos=[bici, biciRoja, magneto, magnetoVer, minitramp])
+  test "todos los aparatos de kinesioHur estan en optimas condiciones" {
+    assert.that(kinesioHur.estaEnOptimasCondiciones())
+  }
+
+  test "kinesioHur ahora con un aparato agregado, ahora NO esta en optimas condiciones" {
+    kinesioHur.agregarAparatoNuevo(magnetoNegro)
+    assert.notThat(kinesioHur.estaEnOptimasCondiciones())
+  }
+
+  test "kinesioHur sin embargo NO esta complicado" {
+    kinesioHur.agregarAparatoNuevo(magnetoNegro)
+    assert.notThat(kinesioHur.estaComplicado())    
+  }
+
+  test "despues de registrar la visita del tecnico, kinesioHur vuelve a estar en condiciones" {
+    kinesioHur.agregarAparatoNuevo(magnetoNegro)
+    kinesioHur.hacerMantenimientoAparatosPesimasCondiciones()
+    assert.that(kinesioHur.estaEnOptimasCondiciones())
+
+  }
+}
