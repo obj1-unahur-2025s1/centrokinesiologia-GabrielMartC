@@ -1,4 +1,8 @@
 class AparatoMagneto{
+    var color = "blanco"
+
+    method color() = color
+
     method accionesAlSerUsado(unaPersona){
         unaPersona.sanarDolorMusc(unaPersona.nivelDolorMusc() * 0.1)
     }
@@ -7,6 +11,10 @@ class AparatoMagneto{
 }
 
 class AparatoBicicleta{
+    var color = "blanco"
+
+    method color() = color
+
     method accionesAlSerUsado(unaPersona){
         unaPersona.sanarDolorMusc(4)
         unaPersona.aumentarFortalezaMusc(3)
@@ -17,6 +25,10 @@ class AparatoBicicleta{
 }
 
 class AparatoMinitramp{
+    var color = "blanco"
+
+    method color() = color
+
     method accionesAlSerUsado(unaPersona){
         unaPersona.aumentarFortalezaMusc(unaPersona.edad() * 0.1)
     }

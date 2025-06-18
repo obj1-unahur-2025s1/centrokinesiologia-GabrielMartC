@@ -63,3 +63,46 @@ describe "group of tests PARTE 1 y 2" {
   
 
 }
+
+describe "group of test PARTE 3" {
+  const bici = new AparatoBicicleta()
+  const biciRoja = new AparatoBicicleta(color = "rojo")
+  const magneto = new AparatoMagneto()
+  const magnetoVer = new AparatoMagneto(color = "verde")
+  const minitramp = new AparatoMinitramp()
+
+  const nicolas = new PacienteResistente(edad=40, nivelFortalezaMusc=20, nivelDolorMusc=10, rutina=[bici, minitramp, bici, magneto])
+  const victoria = new PacienteCaprichoso(edad=30, nivelFortalezaMusc=40, nivelDolorMusc=10, rutina=[bici, minitramp, bici, magneto])
+  const julian = new PacienteCaprichoso(edad=20, nivelFortalezaMusc=50, nivelDolorMusc=54, rutina=[biciRoja, magnetoVer, bici])
+  const zoe = new PacienteRapidaRecup(edad=50, nivelFortalezaMusc=40, nivelDolorMusc=14, rutina=[bici, minitramp, bici, magneto])
+
+  test "Nicolás puede hacer la rutina que tiene asignada. Después de hacerla una vez, 
+  su nivel de dolor baja a 1.8, y su fortaleza sube a 34" {
+    assert.that(nicolas.puedeRealizarRutina())
+    nicolas.realizarRutina()
+    assert.equals(1.8, nicolas.nivelDolorMusc())
+    assert.equals(34, nicolas.nivelFortalezaMusc())
+  }
+
+  test "Victoria no puede hacer la rutina que tiene asignada." {
+    assert.notThat(victoria.puedeRealizarRutina())
+  }
+
+  test "Julián puede hacer la rutina que tiene asignada. Después de hacerla una vez, 
+  su nivel de dolor baja a 29.3, y su fortaleza sube a 62." {
+    assert.that(julian.puedeRealizarRutina())
+    julian.realizarRutina()
+    assert.equals(29.3, julian.nivelDolorMusc())
+    assert.equals(62, julian.nivelFortalezaMusc())
+  }
+
+  test "Zoe puede hacer la rutina que tiene asignada. Después de asignar a 2 el valor de 
+  decremento de dolor para pacientes de rápida recuperación, y de que Zoe haga su rutinauna
+   vez, su nivel de dolor baja a 3.4, y su fortaleza sube a 51." {
+    assert.that(zoe.puedeRealizarRutina())
+    curacionRapidaRecup.nuevoValor(2)
+    zoe.realizarRutina()
+    assert.equals(3.4, zoe.nivelDolorMusc())
+    assert.equals(51, zoe.nivelFortalezaMusc())
+  }
+}
