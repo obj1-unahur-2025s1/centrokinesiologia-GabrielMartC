@@ -1,13 +1,14 @@
 import aparatos.*
 import pacientes.*
 
-describe "group of tests PARTE 1" {
-  const leonardo = new Persona(edad=40, nivelFortalezaMusc=20, nivelDolorMusc=10)
-  const milena = new Persona(edad=3, nivelFortalezaMusc=50, nivelDolorMusc=30)
-
+describe "group of tests PARTE 1 y 2" {
   const bici = new AparatoBicicleta()
   const magneto = new AparatoMagneto()
   const minitramp = new AparatoMinitramp()
+
+  const leonardo = new Persona(edad=40, nivelFortalezaMusc=20, nivelDolorMusc=10, rutina=[bici, minitramp, bici, magneto])
+  const milena = new Persona(edad=3, nivelFortalezaMusc=50, nivelDolorMusc=30, rutina=[magneto, bici])
+
 
   test "Leonardo puede usar los tres aparatos creados" {
     assert.that(leonardo.puedeUsarAparato(bici) and 
@@ -43,6 +44,20 @@ describe "group of tests PARTE 1" {
     leonardo.usarAparato(minitramp)
     assert.equals(24, leonardo.nivelFortalezaMusc())
 
+  }
+
+  test "Leonardo puede hacer la rutina que tiene asignada." {
+    assert.that(leonardo.puedeRealizarRutina())
+  }
+
+  test "Y despues de realizar la rutina, el nivel de dolor de Leonardo baja a 1.8, y su fortaleza sube a 30." {
+    leonardo.realizarRutina()
+    assert.equals(1.8, leonardo.nivelDolorMusc())
+    assert.equals(30, leonardo.nivelFortalezaMusc())
+  }
+
+  test "Milena no puede hacer la rutina que tiene asignada" {
+    assert.notThat(milena.puedeRealizarRutina())
   }
 
   
