@@ -1,5 +1,6 @@
 import aparatos.*
 import pacientes.*
+import centroKinesiologia.*
 
 describe "group of tests PARTE 1 y 2" {
   const bici = new AparatoBicicleta()
@@ -104,5 +105,32 @@ describe "group of test PARTE 3" {
     zoe.realizarRutina()
     assert.equals(3.4, zoe.nivelDolorMusc())
     assert.equals(51, zoe.nivelFortalezaMusc())
+  }
+}
+
+describe "group of test PARTE 4" {
+  const bici = new AparatoBicicleta()
+  const biciRoja = new AparatoBicicleta(color = "rojo")
+  const magneto = new AparatoMagneto()
+  const magnetoVer = new AparatoMagneto(color = "verde")
+  const minitramp = new AparatoMinitramp()
+
+  const nicolas = new PacienteResistente(edad=40, nivelFortalezaMusc=20, nivelDolorMusc=10, rutina=[bici, minitramp, bici, magneto])
+  const victoria = new PacienteCaprichoso(edad=30, nivelFortalezaMusc=40, nivelDolorMusc=10, rutina=[bici, minitramp, bici, magneto])
+  const julian = new PacienteCaprichoso(edad=20, nivelFortalezaMusc=50, nivelDolorMusc=54, rutina=[biciRoja, magnetoVer, bici])
+  const zoe = new PacienteRapidaRecup(edad=50, nivelFortalezaMusc=40, nivelDolorMusc=14, rutina=[bici, minitramp, bici, magneto])
+  const milena = new PacienteResistente(edad=3, nivelFortalezaMusc=50, nivelDolorMusc=30, rutina=[magneto, bici])
+
+  const kinesioHur = new CentroKinesiologia(pacientes=[nicolas, victoria, julian, zoe, milena], aparatos=[bici, biciRoja, magneto, magnetoVer, minitramp])
+  test "los colores de los aparatos kinesioHur son rojo, verde y blanco" {
+    assert.equals(#{"rojo", "verde", "blanco"}, kinesioHur.coloresAparatos())
+  }
+
+  test "el unico paciente menor de 8 anios de kinesioHur es milena" {
+    assert.equals([milena], kinesioHur.pacientesMenoresDe8Anios())
+  }
+
+  test "2 pacientes de kinesioHur NO pueden realizar sus rutinas" {
+    assert.equals(2, kinesioHur.cantPacientQueNoPuedenHacerRutina())
   }
 }
